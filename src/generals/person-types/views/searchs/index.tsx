@@ -6,7 +6,7 @@ import { type PersonTypeResponse } from "../../domain";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
-import { Card } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
 
 const index = (): JSX.Element => {
   const [personTypes, mineralTypesSet] = useState<PersonTypeResponse[]>([]);
@@ -18,7 +18,7 @@ const index = (): JSX.Element => {
   const loadPersonalTypes = async (): Promise<void> => {
     const response = await PersonTypeRepository.findAll();
 
-    mineralTypesSet(response.data);
+    mineralTypesSet(response);
     console.log("response: ", response);
   };
 
