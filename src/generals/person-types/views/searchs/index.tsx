@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Table from "react-bootstrap/Table";
 
 import { PersonTypeRepository } from "../../infrastructure";
 import { type PersonTypeResponse } from "../../domain";
@@ -7,6 +6,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
+import { TableSimple } from "@/core/components/table";
+import { createColumnHelper } from "@tanstack/react-table";
 
 const index = (): JSX.Element => {
   const [personTypes, mineralTypesSet] = useState<PersonTypeResponse[]>([]);
@@ -22,6 +23,34 @@ const index = (): JSX.Element => {
     console.log("response: ", response);
   };
 
+  //React table
+  const columnHelper = createColumnHelper<PersonTypeResponse>();
+
+  const columns = [
+    columnHelper.accessor("id", {
+      header: "ID",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("name", {
+      header: "Nombre",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("description", {
+      header: "Descripción",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("state", {
+      header: "Estado",
+      cell: ({ row }) => (
+        <div className="text-center">
+          <Badge pill bg={row.original.state ? "success" : "danger"}>
+            {row.original.state ? "Activo" : "Elminado"}
+          </Badge>
+        </div>
+      ),
+    }),
+  ];
+
   return (
     <>
       <Row className="pt-2">
@@ -29,7 +58,7 @@ const index = (): JSX.Element => {
           <Card>
             <Card.Header>Listado de Tipo de Persona</Card.Header>
             <Card.Body>
-              <Table striped bordered hover>
+              {/* <Table striped bordered hover>
                 <thead>
                   <tr>
                     <th>#</th>
@@ -56,7 +85,12 @@ const index = (): JSX.Element => {
                       </tr>
                     ))}
                 </tbody>
-              </Table>
+              </Table> */}
+
+              <TableSimple<PersonTypeResponse>
+                columns={columns}
+                data={personTypes ?? []}
+              ></TableSimple>
             </Card.Body>
           </Card>
         </Col>
