@@ -7,6 +7,8 @@ import Home from "../../home";
 import PersonalTypeSearch from "../../generals/person-types/views/searchs";
 import MineralTypeSearch from "../../generals/mineral-types/views/searchs";
 // import MineralSearch from '../../generals/minerals/views/searchs';
+import MineralTypeCreate from "@/generals/mineral-types/views/Create";
+import MineralTypeEdit from "@/generals/mineral-types/views/Edit";
 
 import Auth from "../../core/layouts/Auth";
 import Login from "../../auth/login/views";
@@ -39,6 +41,14 @@ const routes: RouteObject[] = [
             <MineralTypeSearch />
           </PrivateOutlet>
         ),
+      },
+      {
+        path: "/mineral-types/create",
+        element: <MineralTypeCreate />,
+      },
+      {
+        path: "/mineral-types/edit/:id",
+        element: <MineralTypeEdit />,
       },
     ],
   },
